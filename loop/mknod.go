@@ -23,5 +23,5 @@ func NewLoopDeviceFile(id int64) {
 		log.Fatal(err)
 	}
 
-	log.Printf("Node %s has been created", deviceName)
+	log.Printf("Loop device [%s] has been created", deviceName)
 }
