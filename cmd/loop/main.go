@@ -17,5 +17,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	loop.NewLoopDeviceFile(id)
+	loop.NewLoopDevice(int(id))
 }
