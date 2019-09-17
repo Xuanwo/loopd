@@ -2,17 +2,21 @@ syntax = "proto3";
 option go_package = "grpc";
 
 service Loopd {
-    rpc New (NewRequest) returns (OKResponse);
-    rpc Delete (DeleteRequest) returns (OKResponse);
+    rpc Setup (SetupRequest) returns (SetupResponse);
+    rpc Teardown (TeardownRequest) returns (EmptyResponse);
 }
 
-message NewRequest {
+message SetupRequest {
+    string filename = 1;
+}
+
+message SetupResponse {
     int64 id = 1;
 }
 
-message DeleteRequest {
+message TeardownRequest {
     int64 id = 1;
 }
 
-message OKResponse {
+message EmptyResponse {
 }

@@ -7,10 +7,10 @@ import (
 type Server struct {
 }
 
-func (s Server) New(context.Context, *NewRequest) (*OKResponse, error) {
+func (s Server) Setup(context.Context, *SetupRequest) (*SetupResponse, error) {
 	panic("implement me")
 }
 
-func (s Server) Delete(context.Context, *DeleteRequest) (*OKResponse, error) {
+func (s Server) Teardown(context.Context, *TeardownRequest) (*EmptyResponse, error) {
 	panic("implement me")
 }
