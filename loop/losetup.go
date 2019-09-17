@@ -16,7 +16,7 @@ func Setup(deviceName, fileName string) (err error) {
 	err = cmd.Run()
 	if err != nil {
 		log.Print(out.String())
-		log.Fatal(err)
+		return
 	}
 
 	log.Printf("Loop device [%s] has been setup to file [%s]", deviceName, fileName)
@@ -33,7 +33,7 @@ func TearDown(deviceName string) (err error) {
 	err = cmd.Run()
 	if err != nil {
 		log.Print(out.String())
-		log.Fatal(err)
+		return
 	}
 
 	log.Printf("Loop device [%s] has been teardown", deviceName)

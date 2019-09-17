@@ -2,6 +2,7 @@ package loop
 
 import (
 	"bytes"
+	"errors"
 	"log"
 	"os"
 	"os/exec"
@@ -28,6 +29,14 @@ func NextFreeDeviceID() (id int, err error) {
 func NewLoopDevice(id int) (deviceName string, err error) {
 	deviceID := strconv.FormatInt(int64(id), 10)
 	deviceName = "/dev/loop" + deviceID
+
+	_, err = os.Stat(deviceName)
+	if err == nil {
+		return deviceName, nil
+	}
+	if !errors.Is(err, os.ErrNotExist) {
+		return "", err
+	}
 
 	cmd := exec.Command("mknod", "-m", "0660", deviceName, "b", "7", deviceID)
 
