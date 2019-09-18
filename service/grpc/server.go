@@ -7,14 +7,17 @@ import (
 	"github.com/Xuanwo/loopd/loop"
 )
 
+// Server will implements LoopdServer interface.
 type Server struct {
 	devices map[string]string
 }
 
+// NewServer will create a new server.
 func NewServer() *Server {
 	return &Server{devices: make(map[string]string)}
 }
 
+// Setup implements LoopdServer.Setup.
 func (s Server) Setup(ctx context.Context, req *SetupRequest) (resp *SetupResponse, err error) {
 	resp = &SetupResponse{}
 
@@ -37,11 +40,12 @@ func (s Server) Setup(ctx context.Context, req *SetupRequest) (resp *SetupRespon
 	return
 }
 
+// Teardown implements LoopdServer.Teardown.
 func (s Server) Teardown(ctx context.Context, req *TeardownRequest) (resp *EmptyResponse, err error) {
 	resp = &EmptyResponse{}
 
 	if _, ok := s.devices[req.DeviceName]; !ok {
-		log.Printf("Device [%d] is not found in db.", req.DeviceName)
+		log.Printf("Device [%s] is not found in db.", req.DeviceName)
 	}
 
 	err = loop.TearDown(req.DeviceName)

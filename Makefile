@@ -28,7 +28,7 @@ lint:
 	@golint ./...
 	@echo "Done"
 
-build: generate tidy format
+build: check generate tidy format
 	@mkdir -p ./bin
 	@echo "Building loop && loopd..."
 	@go build -o ./bin/loop ./cmd/loop

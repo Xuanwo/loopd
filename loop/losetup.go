@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// Setup will associate a loop device to an image file.
 func Setup(deviceName, fileName string) (err error) {
 	cmd := exec.Command("losetup", deviceName, fileName)
 
@@ -24,6 +25,7 @@ func Setup(deviceName, fileName string) (err error) {
 	return nil
 }
 
+// TearDown will disassociate a loop device.
 func TearDown(deviceName string) (err error) {
 	cmd := exec.Command("losetup", "-d", deviceName)
 
@@ -41,6 +43,7 @@ func TearDown(deviceName string) (err error) {
 	return nil
 }
 
+// NextFreeDevice will get next available device.
 func NextFreeDevice() (device string, err error) {
 	cmd := exec.Command("losetup", "-f")
 

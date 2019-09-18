@@ -8,6 +8,7 @@ import (
 	"os/exec"
 )
 
+// NewLoopDevice will create a new special file.
 func NewLoopDevice(deviceName string) (err error) {
 	_, err = os.Stat(deviceName)
 	if err == nil {
