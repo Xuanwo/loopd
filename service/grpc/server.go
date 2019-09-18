@@ -12,6 +12,10 @@ type Server struct {
 	devices map[int]string
 }
 
+func NewServer() *Server {
+	return &Server{devices: make(map[int]string)}
+}
+
 func (s Server) Setup(ctx context.Context, req *SetupRequest) (resp *SetupResponse, err error) {
 	resp = &SetupResponse{}
 

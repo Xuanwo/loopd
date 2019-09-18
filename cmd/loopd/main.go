@@ -15,7 +15,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterLoopdServer(s, &pb.Server{})
+	pb.RegisterLoopdServer(s, pb.NewServer())
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
