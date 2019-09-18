@@ -39,3 +39,18 @@ func TearDown(deviceName string) (err error) {
 	log.Printf("Loop device [%s] has been teardown", deviceName)
 	return nil
 }
+
+func NextFreeDevice() (device string, err error) {
+	cmd := exec.Command("losetup", "-f")
+
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &out
+	log.Printf("Executing cmd [%s]", cmd.String())
+	err = cmd.Run()
+	if err != nil {
+		log.Print(out.String())
+		log.Fatal(err)
+	}
+	return out.String(), nil
+}

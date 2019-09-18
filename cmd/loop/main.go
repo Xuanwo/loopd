@@ -2,20 +2,18 @@ package main
 
 import (
 	"log"
-	"os"
-	"strconv"
 
 	"github.com/Xuanwo/loopd/loop"
 )
 
 func main() {
-	if len(os.Args) < 2 {
-		log.Fatal("Args is too short")
+	deviceName, err := loop.NextFreeDevice()
+	if err != nil {
+		log.Panic(err)
 	}
 
-	id, err := strconv.ParseInt(os.Args[1], 10, 64)
+	err = loop.NewLoopDevice(deviceName)
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
-	loop.NewLoopDevice(int(id))
 }

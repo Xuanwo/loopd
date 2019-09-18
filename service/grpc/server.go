@@ -3,28 +3,27 @@ package grpc
 import (
 	"context"
 	"log"
-	"strconv"
 
 	"github.com/Xuanwo/loopd/loop"
 )
 
 type Server struct {
-	devices map[int]string
+	devices map[string]string
 }
 
 func NewServer() *Server {
-	return &Server{devices: make(map[int]string)}
+	return &Server{devices: make(map[string]string)}
 }
 
 func (s Server) Setup(ctx context.Context, req *SetupRequest) (resp *SetupResponse, err error) {
 	resp = &SetupResponse{}
 
-	id, err := loop.NextFreeDeviceID()
+	deviceName, err := loop.NextFreeDevice()
 	if err != nil {
 		return
 	}
 
-	deviceName, err := loop.NewLoopDevice(id)
+	err = loop.NewLoopDevice(deviceName)
 	if err != nil {
 		return
 	}
@@ -34,24 +33,22 @@ func (s Server) Setup(ctx context.Context, req *SetupRequest) (resp *SetupRespon
 		return
 	}
 
-	s.devices[id] = req.Filename
+	s.devices[deviceName] = req.Filename
 	return
 }
 
 func (s Server) Teardown(ctx context.Context, req *TeardownRequest) (resp *EmptyResponse, err error) {
 	resp = &EmptyResponse{}
 
-	if _, ok := s.devices[int(req.Id)]; !ok {
-		log.Printf("Device [%d] is not found in db.", req.Id)
+	if _, ok := s.devices[req.DeviceName]; !ok {
+		log.Printf("Device [%d] is not found in db.", req.DeviceName)
 	}
 
-	deviceName := "/dev/loop" + strconv.Itoa(int(req.Id))
-
-	err = loop.TearDown(deviceName)
+	err = loop.TearDown(req.DeviceName)
 	if err != nil {
 		return
 	}
 
-	delete(s.devices, int(req.Id))
+	delete(s.devices, req.DeviceName)
 	return
 }
