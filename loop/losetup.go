@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"log"
 	"os/exec"
+	"strings"
 )
 
 func Setup(deviceName, fileName string) (err error) {
@@ -52,5 +53,5 @@ func NextFreeDevice() (device string, err error) {
 		log.Print(out.String())
 		log.Fatal(err)
 	}
-	return out.String(), nil
+	return strings.TrimSpace(out.String()), nil
 }

@@ -18,7 +18,7 @@ func NewLoopDevice(deviceName string) (err error) {
 	}
 
 	// "/dev/loopXXXX"
-	cmd := exec.Command("mknod", "-m", "0660", deviceName, "b", "7", deviceName[8:])
+	cmd := exec.Command("mknod", "-m", "0660", deviceName, "b", "7", deviceName[9:])
 
 	var out bytes.Buffer
 	cmd.Stdout = &out
